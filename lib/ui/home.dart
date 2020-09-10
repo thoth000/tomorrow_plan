@@ -3,6 +3,10 @@ import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:tomorrow_plan/controller/bottom_bar_controller.dart';
 import 'package:tomorrow_plan/ui/pages/record/record_calendar.dart';
+import 'package:tomorrow_plan/ui/pages/today/today_app_bar.dart';
+import 'package:tomorrow_plan/ui/pages/today/today_body.dart';
+import 'package:tomorrow_plan/ui/pages/tomorrow/tomorrow_app_bar.dart';
+import 'package:tomorrow_plan/ui/pages/tomorrow/tomorrow_body.dart';
 import 'package:tomorrow_plan/ui/parts/my_bottom_navigation_bar.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -11,13 +15,14 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final List<Widget> appBars = [
+    TodayAppBar(),
+    TomorrowAppBar(),
+    null,
+  ];
   final List<Widget> bodies = [
-    Container(
-      child:Center(child: Text("今日"),),
-    ),
-    Container(
-      child:Center(child: Text("明日"),),
-    ),
+    TodayBody(),
+    TomorrowBody(),
     RecordCalendar(),
   ];
   CalendarController _calendarController;
@@ -38,6 +43,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     final int index = Provider.of<BottomBarController>(context).index;
     return Scaffold(
+      appBar: appBars[index],
       body: bodies[index],
       bottomNavigationBar: MyBottomNivigationBar(),
     );
