@@ -4,7 +4,6 @@ class BottomBarController with ChangeNotifier{
   int index = 0;
   void changeIndex(int next){
     index = next;
-    print(index);
     notifyListeners();
   }
 }
