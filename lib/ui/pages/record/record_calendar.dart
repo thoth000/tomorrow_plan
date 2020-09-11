@@ -35,10 +35,10 @@ class _RecordCalendarState extends State<RecordCalendar> {
               events: events,
               builders: CalendarBuilders(
                 markersBuilder: (context, date, _, holidays) {
-                  bool isMark=false;
-                  for(Map event in events[date]){
-                    if(!event['isFinish']){
-                      isMark=true;
+                  bool isMark = false;
+                  for (Map event in events[date]) {
+                    if (!event['isFinish']) {
+                      isMark = true;
                       break;
                     }
                   }
@@ -82,30 +82,38 @@ class EventList extends StatelessWidget {
     Map<DateTime, List<Map<String, dynamic>>> events = controller.events;
     if (events[selectedDate] == null) {
       print('null');
-      return Container();
+      return Center(
+        child:Text('記録なし'),
+      );
     }
-    return ListView(
-      children: events[selectedDate]
-          .map(
-            (event) => Container(
-              decoration: BoxDecoration(
-                border: Border.all(width: 2),
-                borderRadius: BorderRadius.circular(12.0),
-              ),
-              margin: const EdgeInsets.symmetric(
-                horizontal: 8.0,
-                vertical: 4.0,
-              ),
-              child: ListTile(
-                title: Text(
-                  event['title'],
-                ),
-                subtitle: Text(event['isFinish'] ? "達成済み" : "未完了"),
-                onTap: () => print('${event['title']} tapped!'),
-              ),
+    return ListView.builder(
+      itemCount: events[selectedDate].length,
+      itemBuilder: (context, index) {
+        final event = events[selectedDate][index];
+        return Container(
+          decoration: BoxDecoration(
+            border: Border.all(width: 2),
+            borderRadius: BorderRadius.circular(12.0),
+          ),
+          margin: const EdgeInsets.symmetric(
+            horizontal: 8.0,
+            vertical: 4.0,
+          ),
+          child: ListTile(
+            title: Text(
+              event['title'],
             ),
-          )
-          .toList(),
+            subtitle: Text(event['isFinish'] ? "達成済み" : "未完了"),
+            onTap: () {
+              if (!event['isFinish']) {
+                controller.finish(index);
+              } else {
+                controller.unfinish(index);
+              }
+            },
+          ),
+        );
+      },
     );
   }
 }

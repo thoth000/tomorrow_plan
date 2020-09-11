@@ -7,6 +7,7 @@ class RecordController with ChangeNotifier {
       selectedDate: [
         {"title": "aaa", "isFinish": false},
         {"title": "bbb", "isFinish": true},
+        {"title": "ccc", "isFinish": true},
       ],
       selectedDate.subtract(Duration(days: 1)): [
         {"title": "ccc", "isFinish": false},
@@ -40,16 +41,12 @@ class RecordController with ChangeNotifier {
   }
 
   void finish(int index) {
-    final Map<String, dynamic> event = events[selectedDate].removeAt(index);
-    event['isFinish'] = true;
-    events[selectedDate].add(event);
+    events[selectedDate][index]['isFinish'] = true;
     eventSort(selectedDate);
   }
 
   void unfinish(int index) {
-    final Map<String, dynamic> event = events[selectedDate].removeAt(index);
-    event['isFinish'] = false;
-    events[selectedDate].insert(0, event);
+    events[selectedDate][index]['isFinish'] = false;
     eventSort(selectedDate);
   }
 }
