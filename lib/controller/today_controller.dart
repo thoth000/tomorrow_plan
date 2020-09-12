@@ -1,29 +1,43 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 
-class TodayController with ChangeNotifier{
-  List<Map<String,dynamic>> todayPlan;
+class TodayController with ChangeNotifier {
+  List todayPlan;
 
-  void addPlan(String title){
-    final Map<String,dynamic> _event = {"title":title,"isFinish":false};
-    todayPlan.insert(0,_event);
+  Future getPlan() async {
+    todayPlan = await Hive.box('plan').get('todayPlan');
     notifyListeners();
   }
 
-  void removePlan(int index){
+  void setPlan() {
+    Hive.box('plan').put('todayPlan', todayPlan);
+  }
+
+  void addPlan(String title) {
+    final Map<String, dynamic> _event = {"title": title, "isFinish": false};
+    todayPlan.insert(0, _event);
+    notifyListeners();
+    setPlan();
+  }
+
+  void removePlan(int index) {
     todayPlan.removeAt(index);
     notifyListeners();
+    setPlan();
   }
 
-  void finish(int index){
-    todayPlan[index]["isFinish"]=true;
+  void finish(int index) {
+    todayPlan[index]["isFinish"] = true;
     eventSort();
     notifyListeners();
+    setPlan();
   }
 
-  void unfinish(int index){
-    todayPlan[index]["isFinish"]=false;
+  void unfinish(int index) {
+    todayPlan[index]["isFinish"] = false;
     eventSort();
     notifyListeners();
+    setPlan();
   }
 
   void eventSort() {

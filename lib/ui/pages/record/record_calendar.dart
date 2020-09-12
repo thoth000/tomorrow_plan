@@ -27,6 +27,11 @@ class _RecordCalendarState extends State<RecordCalendar> {
   Widget build(BuildContext context) {
     final controller = Provider.of<RecordController>(context);
     Map events = controller.events;
+    if(events==null){
+      return Center(
+        child: CircularProgressIndicator(),
+      );
+    }
     return SafeArea(
       child: Column(
         children: [
@@ -83,7 +88,7 @@ class EventList extends StatelessWidget {
     if (events[selectedDate] == null) {
       print('null');
       return Center(
-        child:Text('記録なし'),
+        child: Text('記録なし'),
       );
     }
     return ListView.builder(
@@ -92,7 +97,7 @@ class EventList extends StatelessWidget {
         final event = events[selectedDate][index];
         return Container(
           decoration: BoxDecoration(
-            border: Border.all(width: 2),
+            border: Border.all(width: 2,color: Colors.grey),
             borderRadius: BorderRadius.circular(12.0),
           ),
           margin: const EdgeInsets.symmetric(
@@ -100,10 +105,35 @@ class EventList extends StatelessWidget {
             vertical: 4.0,
           ),
           child: ListTile(
+            leading: Container(
+              height: 40,
+              width: 40,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(500),
+                border: Border.all(
+                  width: 3,
+                  color: const Color(0xFF5C6BC0),
+                ),
+              ),
+              child: Center(
+                child: event['isFinish']
+                    ? Icon(
+                        Icons.check,
+                        size: 30,
+                        color: const Color(0xFF5C6BC0),
+                      )
+                    : SizedBox(),
+              ),
+            ),
             title: Text(
               event['title'],
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.w700,
+              ),
             ),
-            subtitle: Text(event['isFinish'] ? "達成済み" : "未完了"),
             onTap: () {
               if (!event['isFinish']) {
                 controller.finish(index);

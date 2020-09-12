@@ -8,6 +8,7 @@ import 'package:tomorrow_plan/ui/pages/today/today_body.dart';
 import 'package:tomorrow_plan/ui/pages/tomorrow/tomorrow_app_bar.dart';
 import 'package:tomorrow_plan/ui/pages/tomorrow/tomorrow_body.dart';
 import 'package:tomorrow_plan/ui/parts/my_bottom_navigation_bar.dart';
+import 'package:tomorrow_plan/ui/parts/my_floating_action_button.dart';
 
 class MyHomePage extends StatefulWidget {
   @override
@@ -46,6 +47,7 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: appBars[index],
       body: bodies[index],
       bottomNavigationBar: MyBottomNivigationBar(),
+      floatingActionButton: MyFloatingActionButton(),
     );
   }
 }

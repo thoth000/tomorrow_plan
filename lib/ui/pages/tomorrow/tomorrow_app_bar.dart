@@ -4,8 +4,16 @@ class TomorrowAppBar extends StatelessWidget implements PreferredSizeWidget{
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      elevation: 0,
+      backgroundColor: Colors.transparent,
       centerTitle: true,
-      title: Text("明日の予定"),
+      title: Text(
+        "明日の予定",
+        style: TextStyle(
+          color: const Color(0xFF5C6BC0),
+          fontWeight: FontWeight.w700,
+        ),
+      ),
     );
   }
 
