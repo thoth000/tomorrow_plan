@@ -52,7 +52,7 @@ class TodayController with ChangeNotifier {
     });
   }
 
-  void modeChange(){
+  void modeChange() {
     isRemoving = !isRemoving;
     notifyListeners();
   }

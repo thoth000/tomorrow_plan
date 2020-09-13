@@ -12,7 +12,7 @@ class AddPlanSheet extends StatefulWidget {
 class _AddPlanSheetState extends State<AddPlanSheet> {
   final textEditingController = TextEditingController();
   @override
-  void dispose(){
+  void dispose() {
     super.dispose();
     textEditingController.dispose();
   }
@@ -21,7 +21,8 @@ class _AddPlanSheetState extends State<AddPlanSheet> {
   Widget build(BuildContext context) {
     final int index = Provider.of<BottomBarController>(context).index;
     return Padding(
-      padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+      padding:
+          EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -39,7 +40,7 @@ class _AddPlanSheetState extends State<AddPlanSheet> {
             height: 20,
           ),
           Container(
-            margin: EdgeInsets.symmetric(horizontal:15),
+            margin: EdgeInsets.symmetric(horizontal: 15),
             child: TextField(
               autofocus: true,
               controller: textEditingController,
@@ -48,7 +49,10 @@ class _AddPlanSheetState extends State<AddPlanSheet> {
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(5),
                 ),
-                contentPadding: EdgeInsets.symmetric(vertical:10,horizontal: 10,),
+                contentPadding: EdgeInsets.symmetric(
+                  vertical: 10,
+                  horizontal: 10,
+                ),
               ),
               style: TextStyle(
                 fontSize: 20,
@@ -68,18 +72,23 @@ class _AddPlanSheetState extends State<AddPlanSheet> {
               ),
               color: const Color(0xFF5C6BC0),
               child: Center(
-                child: Text('追加する',style: TextStyle(
-                  fontSize: 15,
-                  color: Colors.white,
-                  fontWeight: FontWeight.w700,
-                ),),
+                child: Text(
+                  '追加する',
+                  style: TextStyle(
+                    fontSize: 15,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
               ),
-              onPressed: (){
+              onPressed: () {
                 final String title = textEditingController.text;
-                if(index==0){
-                  Provider.of<TodayController>(context,listen: false).addPlan(title);
-                }else{
-                  Provider.of<TomorrowController>(context,listen: false).addPlan(title);
+                if (index == 0) {
+                  Provider.of<TodayController>(context, listen: false)
+                      .addPlan(title);
+                } else {
+                  Provider.of<TomorrowController>(context, listen: false)
+                      .addPlan(title);
                 }
                 Navigator.pop(context);
               },

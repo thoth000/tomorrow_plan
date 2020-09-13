@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -150,6 +152,22 @@ class EventList extends StatelessWidget {
             onTap: () {
               if (!event['isFinish']) {
                 controller.finish(index);
+                //for snackBar
+                List<String> messages = [
+                  'お疲れ様でした！',
+                  '頑張りました！',
+                  'この調子です！',
+                  'えらい！',
+                  'さすがです！'
+                ];
+                Random random = new Random();
+                int randomNumber = random.nextInt(5);
+                Scaffold.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(messages[randomNumber]),
+                    duration: Duration(seconds: 1),
+                  ),
+                );
               } else {
                 controller.unfinish(index);
               }

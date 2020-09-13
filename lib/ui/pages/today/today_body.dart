@@ -76,9 +76,9 @@ class TodayBody extends StatelessWidget {
                 controller.finish(index);
                 //for snackBar
                 List<String> messages = [
-                  'お疲れ様です！',
+                  'お疲れ様でした！',
                   '頑張りました！',
-                  'この調子！',
+                  'この調子です！',
                   'えらい！',
                   'さすがです！'
                 ];

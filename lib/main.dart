@@ -45,7 +45,7 @@ class _MyAppState extends State<MyApp> {
 
   Future firstOpen(DateTime today) async {
     if (!Hive.box('setting').containsKey('today')) {
-      final Map<DateTime, List<Map<String,dynamic>>> e = {};
+      final Map<DateTime, List<Map<String, dynamic>>> e = {};
       final DateTime tomorrow = today.add(Duration(days: 1));
       await Hive.box('setting').put('today', today);
       await Hive.box('setting').put('tomorrow', tomorrow);
