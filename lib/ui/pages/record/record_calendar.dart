@@ -26,8 +26,8 @@ class _RecordCalendarState extends State<RecordCalendar> {
   @override
   Widget build(BuildContext context) {
     final controller = Provider.of<RecordController>(context);
-    Map events = controller.events;
-    if(events==null){
+    Map<DateTime, List> events = controller.events;
+    if (events == null) {
       return Center(
         child: CircularProgressIndicator(),
       );
@@ -41,6 +41,11 @@ class _RecordCalendarState extends State<RecordCalendar> {
               builders: CalendarBuilders(
                 markersBuilder: (context, date, _, holidays) {
                   bool isMark = false;
+                  if (events[date].length == 0) {
+                    return [
+                      Container(),
+                    ];
+                  }
                   for (Map event in events[date]) {
                     if (!event['isFinish']) {
                       isMark = true;
@@ -63,7 +68,16 @@ class _RecordCalendarState extends State<RecordCalendar> {
                       )
                     ];
                   }
-                  return [Container()];
+                  return [
+                    Container(
+                      height: 10,
+                      width: 10,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.blueGrey[300],
+                      ),
+                    )
+                  ];
                 },
               ),
               onDaySelected: (day, events) {
@@ -84,9 +98,8 @@ class EventList extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Provider.of<RecordController>(context);
     DateTime selectedDate = controller.selectedDate;
-    Map<DateTime, List<Map<String, dynamic>>> events = controller.events;
+    Map<DateTime, List> events = controller.events;
     if (events[selectedDate] == null) {
-      print('null');
       return Center(
         child: Text('記録なし'),
       );
@@ -97,7 +110,7 @@ class EventList extends StatelessWidget {
         final event = events[selectedDate][index];
         return Container(
           decoration: BoxDecoration(
-            border: Border.all(width: 2,color: Colors.grey),
+            border: Border.all(width: 2, color: Colors.grey),
             borderRadius: BorderRadius.circular(12.0),
           ),
           margin: const EdgeInsets.symmetric(

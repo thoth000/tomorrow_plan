@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:tomorrow_plan/controller/today_controller.dart';
 
 class TodayAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
+    final controller = Provider.of<TodayController>(context);
     return AppBar(
       elevation: 0,
       backgroundColor: Colors.transparent,
@@ -14,6 +17,13 @@ class TodayAppBar extends StatelessWidget implements PreferredSizeWidget {
           fontWeight: FontWeight.w700,
         ),
       ),
+      actions: [
+        IconButton(
+          icon: Icon((controller.isRemoving)?Icons.clear:Icons.edit),
+          color: Colors.red,
+          onPressed: () => controller.modeChange(),
+        ),
+      ],
     );
   }
 

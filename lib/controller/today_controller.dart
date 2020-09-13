@@ -4,6 +4,8 @@ import 'package:hive/hive.dart';
 class TodayController with ChangeNotifier {
   List todayPlan;
 
+  bool isRemoving = false;
+
   Future getPlan() async {
     todayPlan = await Hive.box('plan').get('todayPlan');
     notifyListeners();
@@ -48,5 +50,10 @@ class TodayController with ChangeNotifier {
         return 1;
       }
     });
+  }
+
+  void modeChange(){
+    isRemoving = !isRemoving;
+    notifyListeners();
   }
 }

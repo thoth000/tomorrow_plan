@@ -14,10 +14,8 @@ class MyFloatingActionButton extends StatelessWidget {
         onPressed: () {
           showModalBottomSheet(
             context: context,
-            builder: (context) => Padding(
-              padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-              child: AddPlanSheet(),
-            ),
+            isScrollControlled: true,
+            builder: (context) => AddPlanSheet(),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.vertical(
                 top: Radius.circular(30),

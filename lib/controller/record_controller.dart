@@ -2,14 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
 class RecordController with ChangeNotifier {
-
   DateTime selectedDate;
-  Map events;
-
+  Map<DateTime, List> events;
 
   Future getPlan(DateTime today) async {
-    final savedData = await Hive.lazyBox('event').get('event');
-    events = new Map<DateTime,List<Map<String,dynamic>>>.from(savedData);
+    final Map savedData = await Hive.lazyBox('event').get('event');
+    events = new Map<DateTime, List>.from(savedData);
     selectedDate = today;
     notifyListeners();
   }
@@ -30,7 +28,7 @@ class RecordController with ChangeNotifier {
   }
 
   void selectDate(DateTime day) {
-    final DateTime date = DateTime(day.year,day.month,day.day);
+    final DateTime date = DateTime(day.year, day.month, day.day);
     selectedDate = date;
     notifyListeners();
   }

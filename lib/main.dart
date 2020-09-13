@@ -115,6 +115,7 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
         primarySwatch: Colors.indigo,
         visualDensity: VisualDensity.adaptivePlatformDensity,
+        fontFamily: 'NotoSansJP',
       ),
       home: MyHomePage(),
     );

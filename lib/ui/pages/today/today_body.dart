@@ -1,13 +1,16 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tomorrow_plan/controller/today_controller.dart';
+import 'package:tomorrow_plan/ui/parts/remove_plan_dialog.dart';
 
 class TodayBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Provider.of<TodayController>(context);
-    final todayPlan= controller.todayPlan;
-    if(todayPlan==null){
+    final todayPlan = controller.todayPlan;
+    if (todayPlan == null) {
       return Center(
         child: CircularProgressIndicator(),
       );
@@ -18,7 +21,7 @@ class TodayBody extends StatelessWidget {
         final event = todayPlan[index];
         return Container(
           decoration: BoxDecoration(
-            border: Border.all(width: 2,color: Colors.grey),
+            border: Border.all(width: 2, color: Colors.grey),
             borderRadius: BorderRadius.circular(12.0),
           ),
           margin: const EdgeInsets.symmetric(
@@ -37,13 +40,19 @@ class TodayBody extends StatelessWidget {
                 ),
               ),
               child: Center(
-                child: event['isFinish']
-                    ? Icon(
-                        Icons.check,
-                        size: 30,
+                child: controller.isRemoving
+                    ? const Icon(
+                        Icons.remove,
                         color: const Color(0xFF5C6BC0),
+                        size: 35,
                       )
-                    : SizedBox(),
+                    : event['isFinish']
+                        ? const Icon(
+                            Icons.check,
+                            color: const Color(0xFF5C6BC0),
+                            size: 30,
+                          )
+                        : const SizedBox(),
               ),
             ),
             title: Text(
@@ -51,13 +60,36 @@ class TodayBody extends StatelessWidget {
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
-                fontSize: 25,
+                fontSize: 20,
                 fontWeight: FontWeight.w700,
               ),
             ),
             onTap: () {
-              if (!event['isFinish']) {
+              if (controller.isRemoving) {
+                showDialog(
+                  context: context,
+                  child: RemovePlanDialog(
+                    planIndex: index,
+                  ),
+                );
+              } else if (!event['isFinish']) {
                 controller.finish(index);
+                //for snackBar
+                List<String> messages = [
+                  'お疲れ様です！',
+                  '頑張りました！',
+                  'この調子！',
+                  'えらい！',
+                  'さすがです！'
+                ];
+                Random random = new Random();
+                int randomNumber = random.nextInt(5);
+                Scaffold.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(messages[randomNumber]),
+                    duration: Duration(seconds: 1),
+                  ),
+                );
               } else {
                 controller.unfinish(index);
               }

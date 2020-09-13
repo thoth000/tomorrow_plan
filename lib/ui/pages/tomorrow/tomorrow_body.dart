@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tomorrow_plan/controller/tomorrow_controller.dart';
+import 'package:tomorrow_plan/ui/parts/remove_plan_dialog.dart';
 
 class TomorrowBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Provider.of<TomorrowController>(context);
-    final tomorrowPlan= controller.tomorrowPlan;
-    if(tomorrowPlan==null){
+    final tomorrowPlan = controller.tomorrowPlan;
+    if (tomorrowPlan == null) {
       return Center(
         child: CircularProgressIndicator(),
       );
@@ -18,7 +19,7 @@ class TomorrowBody extends StatelessWidget {
         final event = tomorrowPlan[index];
         return Container(
           decoration: BoxDecoration(
-            border: Border.all(width: 2,color: Colors.grey),
+            border: Border.all(width: 2, color: Colors.grey),
             borderRadius: BorderRadius.circular(12.0),
           ),
           margin: const EdgeInsets.symmetric(
@@ -37,10 +38,10 @@ class TomorrowBody extends StatelessWidget {
                 ),
               ),
               child: Center(
-                child: Icon(
+                child: const Icon(
                   Icons.remove,
-                  size: 35,
                   color: const Color(0xFF5C6BC0),
+                  size: 35,
                 ),
               ),
             ),
@@ -49,12 +50,18 @@ class TomorrowBody extends StatelessWidget {
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
-                fontSize: 25,
+                fontSize: 20,
                 fontWeight: FontWeight.w700,
               ),
             ),
-            onTap: (){
-              controller.removePlan(index);
+            onTap: () {
+              showDialog(
+                context: context,
+                child: RemovePlanDialog(
+                  planIndex: index,
+                ),
+              );
+              //controller.removePlan(index);
             },
           ),
         );
