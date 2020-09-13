@@ -44,7 +44,8 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future firstOpen(DateTime today) async {
-    if (!Hive.box('setting').containsKey('today')) {
+    print(Hive.box('setting').get('today'));
+    if (Hive.box('setting').containsKey('today')==false) {
       final Map<DateTime, List<Map<String, dynamic>>> e = {};
       final DateTime tomorrow = today.add(Duration(days: 1));
       await Hive.box('setting').put('today', today);
@@ -101,11 +102,9 @@ class _MyAppState extends State<MyApp> {
   }
 
   @override
-  void dispose() {
+  void dispose(){
     super.dispose();
-    Hive.box('plan').close();
-    Hive.box('setting').close();
-    Hive.lazyBox('event').close();
+    Hive.close();
   }
 
   @override
