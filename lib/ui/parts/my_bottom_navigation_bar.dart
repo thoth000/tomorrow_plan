@@ -11,6 +11,8 @@ class MyBottomNivigationBar extends StatelessWidget {
         children: [
           Expanded(
             child: FlatButton(
+              splashColor: Colors.transparent,
+              highlightColor: Colors.transparent,
               child: Container(
                 margin: EdgeInsets.symmetric(vertical: 10),
                 padding: EdgeInsets.symmetric(
@@ -41,6 +43,8 @@ class MyBottomNivigationBar extends StatelessWidget {
           ),
           Expanded(
             child: FlatButton(
+              splashColor: Colors.transparent,
+              highlightColor: Colors.transparent,
               child: Container(
                 margin: EdgeInsets.symmetric(vertical: 10),
                 padding: EdgeInsets.symmetric(
@@ -71,6 +75,8 @@ class MyBottomNivigationBar extends StatelessWidget {
           ),
           Expanded(
             child: FlatButton(
+              splashColor: Colors.transparent,
+              highlightColor: Colors.transparent,
               child: Container(
                 margin: EdgeInsets.symmetric(vertical: 10),
                 padding: EdgeInsets.symmetric(
