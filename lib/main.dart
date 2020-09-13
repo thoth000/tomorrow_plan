@@ -46,7 +46,6 @@ class _MyAppState extends State<MyApp> {
 
   Future firstOpen(DateTime today) async {
     final PackageInfo packageInfo = await PackageInfo.fromPlatform();
-    print(Hive.box('setting').get('version'));
     if (!Hive.box('setting').containsKey('version')) {
       final Map<DateTime, List<Map<String, dynamic>>> e = {};
       final DateTime tomorrow = today.add(Duration(days: 1));
