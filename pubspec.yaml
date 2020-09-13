@@ -26,6 +26,7 @@ dev_dependencies:
     sdk: flutter
   hive_generator: ^0.7.1
   build_runner: ^1.10.2
+  flutter_native_splash: ^0.1.9
 
 flutter:
 
@@ -40,3 +41,7 @@ flutter:
         weight: 400
       - asset: fonts/NotoSansJP-Thin.otf
         weight: 100
+
+flutter_native_splash:
+  image: images/app_icon.png
+  color: "ffffff"
