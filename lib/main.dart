@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:package_info/package_info.dart';
 import 'package:provider/provider.dart';
 import 'package:tomorrow_plan/controller/bottom_bar_controller.dart';
 import 'package:tomorrow_plan/controller/record_controller.dart';
@@ -44,10 +45,12 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future firstOpen(DateTime today) async {
-    print(Hive.box('setting').get('today'));
-    if (Hive.box('setting').containsKey('today')==false) {
+    final PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    print(Hive.box('setting').get('version'));
+    if (!Hive.box('setting').containsKey('version')) {
       final Map<DateTime, List<Map<String, dynamic>>> e = {};
       final DateTime tomorrow = today.add(Duration(days: 1));
+      await Hive.box('setting').put('version', packageInfo.version);
       await Hive.box('setting').put('today', today);
       await Hive.box('setting').put('tomorrow', tomorrow);
       await Hive.box('plan').put('todayPlan', []);
@@ -102,7 +105,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   @override
-  void dispose(){
+  void dispose() {
     super.dispose();
     Hive.close();
   }
