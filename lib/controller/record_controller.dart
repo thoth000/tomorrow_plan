@@ -9,13 +9,6 @@ class RecordController with ChangeNotifier {
   Future getPlan(DateTime today) async {
     final Map savedData = await Hive.lazyBox('event').get('event');
     events = new Map<DateTime, List>.from(savedData);
-    events = {
-      today: [
-        {'title': 'test', 'isFinish': false},
-        {'title': 'test2', 'isFinish': true},
-        {'title': 'test3', 'isFinish': false}
-      ]
-    };
     selectedDate = today;
     notifyListeners();
   }
