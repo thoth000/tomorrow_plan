@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tomorrow_plan/controller/bottom_bar_controller.dart';
+import 'package:tomorrow_plan/controller/record_controller.dart';
+import 'package:tomorrow_plan/controller/today_controller.dart';
 
 class MyBottomNivigationBar extends StatelessWidget {
   @override
@@ -38,6 +40,8 @@ class MyBottomNivigationBar extends StatelessWidget {
               onPressed: () {
                 Provider.of<BottomBarController>(context, listen: false)
                     .changeIndex(0);
+                Provider.of<RecordController>(context, listen: false)
+                    .resetMode();
               },
             ),
           ),
@@ -70,6 +74,10 @@ class MyBottomNivigationBar extends StatelessWidget {
               onPressed: () {
                 Provider.of<BottomBarController>(context, listen: false)
                     .changeIndex(1);
+                Provider.of<TodayController>(context, listen: false)
+                    .resetMode();
+                Provider.of<RecordController>(context, listen: false)
+                    .resetMode();
               },
             ),
           ),
@@ -102,6 +110,8 @@ class MyBottomNivigationBar extends StatelessWidget {
               onPressed: () {
                 Provider.of<BottomBarController>(context, listen: false)
                     .changeIndex(2);
+                Provider.of<TodayController>(context, listen: false)
+                    .resetMode();
               },
             ),
           ),

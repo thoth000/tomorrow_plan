@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tomorrow_plan/controller/today_controller.dart';
+import 'package:tomorrow_plan/controller/record_controller.dart';
 
-class TodayAppBar extends StatelessWidget implements PreferredSizeWidget {
+class RecordAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
-    final controller = Provider.of<TodayController>(context);
+    final controller = Provider.of<RecordController>(context);
     return AppBar(
       elevation: 0,
       backgroundColor: Colors.transparent,
       centerTitle: true,
       title: Text(
-        "今日の予定",
+        "これまでの記録",
         style: TextStyle(
           color: const Color(0xFF5C6BC0),
           fontWeight: FontWeight.w700,

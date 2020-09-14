@@ -65,7 +65,6 @@ class _MyAppState extends State<MyApp> {
       final List todayPlan = Hive.box('plan').get('todayPlan');
       final Map event = await Hive.lazyBox('event').get('event');
       event[savedToday] = todayPlan;
-      //
       final List tomorrowPlan = Hive.box('plan').get('tomorrowPlan');
       if (today.difference(savedToday).inDays == 1) {
         await Hive.box('plan').put('todayPlan', tomorrowPlan);
@@ -73,7 +72,6 @@ class _MyAppState extends State<MyApp> {
         await Hive.box('plan').put('todayPlan', []);
         event[savedTomorrow] = tomorrowPlan;
       }
-      //
       await Hive.box('plan').put('tomorrowPlan', []);
       await Hive.lazyBox('event').put('event', event);
       await Hive.box('setting').put('today', today);

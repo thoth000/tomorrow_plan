@@ -2,23 +2,25 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tomorrow_plan/controller/today_controller.dart';
+
+import 'package:tomorrow_plan/controller/record_controller.dart';
 import 'package:tomorrow_plan/ui/parts/remove_plan_dialog.dart';
 
-class TodayBody extends StatelessWidget {
+class EventList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final controller = Provider.of<TodayController>(context);
-    final todayPlan = controller.todayPlan;
-    if (todayPlan == null) {
+    final controller = Provider.of<RecordController>(context);
+    DateTime selectedDate = controller.selectedDate;
+    Map<DateTime, List> events = controller.events;
+    if (events[selectedDate] == null) {
       return const Center(
-        child: CircularProgressIndicator(),
+        child: Text('記録なし'),
       );
     }
     return ListView.builder(
-      itemCount: todayPlan.length,
+      itemCount: events[selectedDate].length,
       itemBuilder: (context, index) {
-        final event = todayPlan[index];
+        final event = events[selectedDate][index];
         return Container(
           decoration: BoxDecoration(
             border: Border.all(width: 2, color: Colors.grey),
@@ -26,7 +28,7 @@ class TodayBody extends StatelessWidget {
           ),
           margin: const EdgeInsets.symmetric(
             horizontal: 8.0,
-            vertical: 5,
+            vertical: 4.0,
           ),
           child: ListTile(
             leading: Container(
@@ -49,10 +51,10 @@ class TodayBody extends StatelessWidget {
                     : event['isFinish']
                         ? const Icon(
                             Icons.check,
-                            color: Color(0xFF5C6BC0),
                             size: 30,
+                            color: Color(0xFF5C6BC0),
                           )
-                        : const SizedBox(),
+                        : SizedBox(),
               ),
             ),
             title: Text(

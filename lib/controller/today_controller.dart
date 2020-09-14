@@ -28,14 +28,14 @@ class TodayController with ChangeNotifier {
     setPlan();
   }
 
-  void finish(int index) {
+  void finishPlan(int index) {
     todayPlan[index]["isFinish"] = true;
     eventSort();
     notifyListeners();
     setPlan();
   }
 
-  void unfinish(int index) {
+  void unfinishPlan(int index) {
     todayPlan[index]["isFinish"] = false;
     eventSort();
     notifyListeners();
@@ -52,8 +52,13 @@ class TodayController with ChangeNotifier {
     });
   }
 
-  void modeChange() {
+  void switchMode() {
     isRemoving = !isRemoving;
+    notifyListeners();
+  }
+
+  void resetMode() {
+    isRemoving = false;
     notifyListeners();
   }
 }
