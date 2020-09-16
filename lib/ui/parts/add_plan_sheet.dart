@@ -19,7 +19,7 @@ class _AddPlanSheetState extends State<AddPlanSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final int index = Provider.of<BottomBarController>(context).index;
+    final int pageIndex = Provider.of<BottomBarController>(context).index;
     return Padding(
       padding:
           EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
@@ -83,12 +83,16 @@ class _AddPlanSheetState extends State<AddPlanSheet> {
               ),
               onPressed: () {
                 final String title = textEditingController.text;
-                if (index == 0) {
+                Map event = {
+                  'title': title,
+                  'isFinish': false,
+                };
+                if (pageIndex == 0) {
                   Provider.of<TodayController>(context, listen: false)
-                      .addPlan(title);
+                      .addPlan(event);
                 } else {
                   Provider.of<TomorrowController>(context, listen: false)
-                      .addPlan(title);
+                      .addPlan(event);
                 }
                 Navigator.pop(context);
               },

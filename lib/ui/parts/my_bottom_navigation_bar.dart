@@ -41,7 +41,7 @@ class MyBottomNivigationBar extends StatelessWidget {
                 Provider.of<BottomBarController>(context, listen: false)
                     .changeIndex(0);
                 Provider.of<RecordController>(context, listen: false)
-                    .resetMode();
+                    .reset();
               },
             ),
           ),
@@ -77,7 +77,7 @@ class MyBottomNivigationBar extends StatelessWidget {
                 Provider.of<TodayController>(context, listen: false)
                     .resetMode();
                 Provider.of<RecordController>(context, listen: false)
-                    .resetMode();
+                    .reset();
               },
             ),
           ),

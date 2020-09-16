@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tomorrow_plan/controller/tomorrow_controller.dart';
-import 'package:tomorrow_plan/ui/parts/remove_plan_dialog.dart';
+import 'package:tomorrow_plan/ui/parts/action_sheet.dart';
 
 class TomorrowBody extends StatelessWidget {
   @override
@@ -55,13 +55,17 @@ class TomorrowBody extends StatelessWidget {
               ),
             ),
             onTap: () {
-              showDialog(
+              showModalBottomSheet(
                 context: context,
-                child: RemovePlanDialog(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.vertical(
+                    top: Radius.circular(30),
+                  ),
+                ),
+                builder: (context) => ActionSheet(
                   planIndex: index,
                 ),
               );
-              //controller.removePlan(index);
             },
           ),
         );

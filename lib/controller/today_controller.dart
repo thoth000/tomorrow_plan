@@ -4,10 +4,11 @@ import 'package:hive/hive.dart';
 class TodayController with ChangeNotifier {
   List todayPlan;
 
-  bool isRemoving = false;
+  bool isEditing = false;
 
   Future getPlan() async {
     todayPlan = await Hive.box('plan').get('todayPlan');
+    eventSort();
     notifyListeners();
   }
 
@@ -15,17 +16,18 @@ class TodayController with ChangeNotifier {
     Hive.box('plan').put('todayPlan', todayPlan);
   }
 
-  void addPlan(String title) {
-    final Map<String, dynamic> _event = {"title": title, "isFinish": false};
-    todayPlan.insert(0, _event);
+  void addPlan(Map event) {
+    todayPlan.add(event);
+    eventSort();
     notifyListeners();
     setPlan();
   }
 
-  void removePlan(int index) {
-    todayPlan.removeAt(index);
+  Map removePlan(int index) {
+    final map = todayPlan.removeAt(index);
     notifyListeners();
     setPlan();
+    return map;
   }
 
   void finishPlan(int index) {
@@ -53,12 +55,12 @@ class TodayController with ChangeNotifier {
   }
 
   void switchMode() {
-    isRemoving = !isRemoving;
+    isEditing = !isEditing;
     notifyListeners();
   }
 
   void resetMode() {
-    isRemoving = false;
+    isEditing = false;
     notifyListeners();
   }
 }

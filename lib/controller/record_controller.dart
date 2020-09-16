@@ -4,7 +4,7 @@ import 'package:hive/hive.dart';
 class RecordController with ChangeNotifier {
   DateTime selectedDate;
   Map<DateTime, List> events;
-  bool isRemoving = false;
+  bool isEditing = false;
 
   Future getPlan(DateTime today) async {
     final Map savedData = await Hive.lazyBox('event').get('event');
@@ -47,18 +47,20 @@ class RecordController with ChangeNotifier {
   }
 
   void switchMode() {
-    isRemoving = !isRemoving;
+    isEditing = !isEditing;
     notifyListeners();
   }
 
-  void resetMode() {
-    isRemoving = false;
+  void reset() {
+    isEditing = false;
+    selectedDate=Hive.box('setting').get('today');
     notifyListeners();
   }
 
-  void removePlan(int index) {
-    events[selectedDate].removeAt(index);
+  Map removePlan(int index) {
+    final map = events[selectedDate].removeAt(index);
     notifyListeners();
     setPlan();
+    return map;
   }
 }

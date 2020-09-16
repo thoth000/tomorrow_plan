@@ -19,7 +19,7 @@ class RecordAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       actions: [
         IconButton(
-          icon: Icon((controller.isRemoving) ? Icons.clear : Icons.edit),
+          icon: Icon((controller.isEditing) ? Icons.clear : Icons.edit),
           color: Colors.red,
           onPressed: () => controller.switchMode(),
         ),

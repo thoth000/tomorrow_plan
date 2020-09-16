@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:tomorrow_plan/controller/record_controller.dart';
-import 'package:tomorrow_plan/ui/parts/remove_plan_dialog.dart';
+import 'package:tomorrow_plan/ui/parts/action_sheet.dart';
 
 class EventList extends StatelessWidget {
   @override
@@ -12,7 +12,7 @@ class EventList extends StatelessWidget {
     final controller = Provider.of<RecordController>(context);
     DateTime selectedDate = controller.selectedDate;
     Map<DateTime, List> events = controller.events;
-    if (events[selectedDate] == null) {
+    if (events[selectedDate] == null || events[selectedDate].length == 0) {
       return const Center(
         child: Text('記録なし'),
       );
@@ -42,7 +42,7 @@ class EventList extends StatelessWidget {
                 ),
               ),
               child: Center(
-                child: controller.isRemoving
+                child: controller.isEditing
                     ? const Icon(
                         Icons.remove,
                         color: Color(0xFF5C6BC0),
@@ -67,10 +67,15 @@ class EventList extends StatelessWidget {
               ),
             ),
             onTap: () {
-              if (controller.isRemoving) {
-                showDialog(
+              if (controller.isEditing) {
+                showModalBottomSheet(
                   context: context,
-                  child: RemovePlanDialog(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.vertical(
+                      top: Radius.circular(30),
+                    ),
+                  ),
+                  builder: (context) => ActionSheet(
                     planIndex: index,
                   ),
                 );

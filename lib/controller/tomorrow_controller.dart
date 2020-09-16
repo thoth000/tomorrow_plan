@@ -13,16 +13,16 @@ class TomorrowController with ChangeNotifier {
     Hive.box('plan').put('tomorrowPlan', tomorrowPlan);
   }
 
-  void addPlan(String title) {
-    final Map<String, dynamic> _event = {"title": title, "isFinish": false};
-    tomorrowPlan.insert(0, _event);
+  void addPlan(Map event) {
+    tomorrowPlan.add(event);
     notifyListeners();
     setPlan();
   }
 
-  void removePlan(int index) {
-    tomorrowPlan.removeAt(index);
+  Map removePlan(int index) {
+    final Map map = tomorrowPlan.removeAt(index);
     notifyListeners();
     setPlan();
+    return map;
   }
 }
