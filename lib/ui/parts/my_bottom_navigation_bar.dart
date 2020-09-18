@@ -12,8 +12,11 @@ class MyBottomNivigationBar extends StatelessWidget {
         children: [
           Expanded(
             child: FlatButton(
-              splashColor: Colors.transparent,
+              splashColor: Colors.black12,
               highlightColor: Colors.transparent,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
+              ),
               child: Container(
                 margin: EdgeInsets.symmetric(vertical: 10),
                 padding: EdgeInsets.symmetric(
@@ -48,8 +51,11 @@ class MyBottomNivigationBar extends StatelessWidget {
           ),
           Expanded(
             child: FlatButton(
-              splashColor: Colors.transparent,
+              splashColor: Colors.black12,
               highlightColor: Colors.transparent,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
+              ),
               child: Container(
                 margin: EdgeInsets.symmetric(vertical: 10),
                 padding: EdgeInsets.symmetric(
@@ -84,8 +90,11 @@ class MyBottomNivigationBar extends StatelessWidget {
           ),
           Expanded(
             child: FlatButton(
-              splashColor: Colors.transparent,
+              splashColor: Colors.black12,
               highlightColor: Colors.transparent,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
+              ),
               child: Container(
                 margin: EdgeInsets.symmetric(vertical: 10),
                 padding: EdgeInsets.symmetric(

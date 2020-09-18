@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:vibration/vibration.dart';
 
 class RecordController with ChangeNotifier {
   DateTime selectedDate;
@@ -45,6 +46,7 @@ class RecordController with ChangeNotifier {
     }
     events[_date][index]['isFinish'] = true;
     eventSort(_date);
+    Vibration.vibrate(duration: 60);
     setPlan();
   }
 
@@ -57,6 +59,7 @@ class RecordController with ChangeNotifier {
     }
     events[_date][index]['isFinish'] = false;
     eventSort(_date);
+    Vibration.vibrate(duration: 50);
     setPlan();
   }
 

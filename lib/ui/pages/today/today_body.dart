@@ -12,8 +12,6 @@ class TodayBody extends StatelessWidget {
     final todayPlan = controller.events[controller.today];
     if (todayPlan == null) {
       return Container();
-    } else {
-      print(todayPlan);
     }
     return ListView.builder(
       itemCount: todayPlan.length,

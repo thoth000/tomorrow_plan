@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tomorrow_plan/controller/bottom_bar_controller.dart';
 import 'package:tomorrow_plan/controller/record_controller.dart';
+import 'package:vibration/vibration.dart';
 
 class ActionSheet extends StatelessWidget {
   ActionSheet({this.planIndex});
@@ -56,6 +57,7 @@ class ActionSheet extends StatelessWidget {
                   }
                   Provider.of<RecordController>(context, listen: false)
                       .addPlan(event, 'today');
+                  Vibration.vibrate(duration: 50);
                   Navigator.pop(context);
                 },
               )
@@ -91,6 +93,7 @@ class ActionSheet extends StatelessWidget {
                   }
                   Provider.of<RecordController>(context, listen: false)
                       .addPlan(event, 'tomorrow');
+                  Vibration.vibrate(duration: 50);
                   Navigator.pop(context);
                 },
               )
@@ -123,6 +126,7 @@ class ActionSheet extends StatelessWidget {
               Provider.of<RecordController>(context, listen: false)
                   .removePlan(planIndex, 'normal');
             }
+            Vibration.vibrate(duration: 50);
             Navigator.pop(context);
           },
         ),
