@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tomorrow_plan/controller/bottom_bar_controller.dart';
 import 'package:tomorrow_plan/controller/record_controller.dart';
-import 'package:tomorrow_plan/controller/today_controller.dart';
-import 'package:tomorrow_plan/controller/tomorrow_controller.dart';
 
 class ActionSheet extends StatelessWidget {
   ActionSheet({this.planIndex});
@@ -49,15 +47,15 @@ class ActionSheet extends StatelessWidget {
                   Map event;
                   if (pageIndex == 1) {
                     event =
-                        Provider.of<TomorrowController>(context, listen: false)
-                            .removePlan(planIndex);
+                        Provider.of<RecordController>(context, listen: false)
+                            .removePlan(planIndex, 'tomorrow');
                   } else {
                     event =
                         Provider.of<RecordController>(context, listen: false)
-                            .removePlan(planIndex);
+                            .removePlan(planIndex, 'normal');
                   }
-                  Provider.of<TodayController>(context, listen: false)
-                      .addPlan(event);
+                  Provider.of<RecordController>(context, listen: false)
+                      .addPlan(event, 'today');
                   Navigator.pop(context);
                 },
               )
@@ -83,15 +81,16 @@ class ActionSheet extends StatelessWidget {
                 onTap: () {
                   Map event;
                   if (pageIndex == 0) {
-                    event = Provider.of<TodayController>(context, listen: false)
-                        .removePlan(planIndex);
+                    event =
+                        Provider.of<RecordController>(context, listen: false)
+                            .removePlan(planIndex, 'today');
                   } else {
                     event =
                         Provider.of<RecordController>(context, listen: false)
-                            .removePlan(planIndex);
+                            .removePlan(planIndex, 'normal');
                   }
-                  Provider.of<TomorrowController>(context, listen: false)
-                      .addPlan(event);
+                  Provider.of<RecordController>(context, listen: false)
+                      .addPlan(event, 'tomorrow');
                   Navigator.pop(context);
                 },
               )
@@ -115,14 +114,14 @@ class ActionSheet extends StatelessWidget {
           ),
           onTap: () {
             if (pageIndex == 0) {
-              Provider.of<TodayController>(context, listen: false)
-                  .removePlan(planIndex);
+              Provider.of<RecordController>(context, listen: false)
+                  .removePlan(planIndex, 'today');
             } else if (pageIndex == 1) {
-              Provider.of<TomorrowController>(context, listen: false)
-                  .removePlan(planIndex);
+              Provider.of<RecordController>(context, listen: false)
+                  .removePlan(planIndex, 'tomorrow');
             } else {
               Provider.of<RecordController>(context, listen: false)
-                  .removePlan(planIndex);
+                  .removePlan(planIndex, 'normal');
             }
             Navigator.pop(context);
           },

@@ -1,17 +1,18 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tomorrow_plan/controller/tomorrow_controller.dart';
+import 'package:tomorrow_plan/controller/record_controller.dart';
 import 'package:tomorrow_plan/ui/parts/action_sheet.dart';
 
 class TomorrowBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final controller = Provider.of<TomorrowController>(context);
-    final tomorrowPlan = controller.tomorrowPlan;
+    final controller = Provider.of<RecordController>(context);
+    final tomorrowPlan =
+        controller.events[controller.today.add(Duration(days: 1))];
     if (tomorrowPlan == null) {
-      return Center(
-        child: CircularProgressIndicator(),
-      );
+      return Container();
     }
     return ListView.builder(
       itemCount: tomorrowPlan.length,
@@ -38,11 +39,19 @@ class TomorrowBody extends StatelessWidget {
                 ),
               ),
               child: Center(
-                child: const Icon(
-                  Icons.remove,
-                  color: const Color(0xFF5C6BC0),
-                  size: 35,
-                ),
+                child: controller.isEditing
+                    ? const Icon(
+                        Icons.remove,
+                        color: Color(0xFF5C6BC0),
+                        size: 35,
+                      )
+                    : event['isFinish']
+                        ? const Icon(
+                            Icons.check,
+                            size: 30,
+                            color: Color(0xFF5C6BC0),
+                          )
+                        : SizedBox(),
               ),
             ),
             title: Text(
@@ -55,17 +64,39 @@ class TomorrowBody extends StatelessWidget {
               ),
             ),
             onTap: () {
-              showModalBottomSheet(
-                context: context,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.vertical(
-                    top: Radius.circular(30),
+              if (controller.isEditing) {
+                showModalBottomSheet(
+                  context: context,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.vertical(
+                      top: Radius.circular(30),
+                    ),
                   ),
-                ),
-                builder: (context) => ActionSheet(
-                  planIndex: index,
-                ),
-              );
+                  builder: (context) => ActionSheet(
+                    planIndex: index,
+                  ),
+                );
+              } else if (!event['isFinish']) {
+                controller.finishPlan(index, 'tomorrow');
+                //for snackBar
+                List<String> messages = [
+                  'お疲れ様でした！',
+                  '頑張りました！',
+                  'この調子です！',
+                  'えらい！',
+                  'さすがです！'
+                ];
+                Random random = new Random();
+                int randomNumber = random.nextInt(5);
+                Scaffold.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(messages[randomNumber]),
+                    duration: Duration(seconds: 1),
+                  ),
+                );
+              } else {
+                controller.unfinishPlan(index, 'tomorrow');
+              }
             },
           ),
         );

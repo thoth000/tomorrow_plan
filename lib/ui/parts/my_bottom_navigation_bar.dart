@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tomorrow_plan/controller/bottom_bar_controller.dart';
 import 'package:tomorrow_plan/controller/record_controller.dart';
-import 'package:tomorrow_plan/controller/today_controller.dart';
 
 class MyBottomNivigationBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    int index = Provider.of<BottomBarController>(context).index;
+    int pageIndex = Provider.of<BottomBarController>(context).index;
     return BottomAppBar(
       child: Row(
         children: [
@@ -23,25 +22,27 @@ class MyBottomNivigationBar extends StatelessWidget {
                 width: MediaQuery.of(context).size.width / 3.01,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  color:
-                      index == 0 ? const Color(0xFF5C6BC0) : Colors.transparent,
+                  color: pageIndex == 0
+                      ? const Color(0xFF5C6BC0)
+                      : Colors.transparent,
                 ),
                 child: Text(
                   "今日",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    color: index == 0
+                    color: pageIndex == 0
                         ? const Color(0xFFFFFFFF)
                         : const Color(0xFF5C6BC0),
                   ),
                 ),
               ),
               onPressed: () {
+                if (pageIndex != 0) {
+                  Provider.of<RecordController>(context, listen: false).reset();
+                }
                 Provider.of<BottomBarController>(context, listen: false)
                     .changeIndex(0);
-                Provider.of<RecordController>(context, listen: false)
-                    .reset();
               },
             ),
           ),
@@ -57,27 +58,27 @@ class MyBottomNivigationBar extends StatelessWidget {
                 width: MediaQuery.of(context).size.width / 3.01,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  color:
-                      index == 1 ? const Color(0xFF5C6BC0) : Colors.transparent,
+                  color: pageIndex == 1
+                      ? const Color(0xFF5C6BC0)
+                      : Colors.transparent,
                 ),
                 child: Text(
                   "明日",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    color: index == 1
+                    color: pageIndex == 1
                         ? const Color(0xFFFFFFFF)
                         : const Color(0xFF5C6BC0),
                   ),
                 ),
               ),
               onPressed: () {
+                if (pageIndex != 1) {
+                  Provider.of<RecordController>(context, listen: false).reset();
+                }
                 Provider.of<BottomBarController>(context, listen: false)
                     .changeIndex(1);
-                Provider.of<TodayController>(context, listen: false)
-                    .resetMode();
-                Provider.of<RecordController>(context, listen: false)
-                    .reset();
               },
             ),
           ),
@@ -93,25 +94,27 @@ class MyBottomNivigationBar extends StatelessWidget {
                 width: MediaQuery.of(context).size.width / 3.01,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  color:
-                      index == 2 ? const Color(0xFF5C6BC0) : Colors.transparent,
+                  color: pageIndex == 2
+                      ? const Color(0xFF5C6BC0)
+                      : Colors.transparent,
                 ),
                 child: Text(
                   "記録",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    color: index == 2
+                    color: pageIndex == 2
                         ? const Color(0xFFFFFFFF)
                         : const Color(0xFF5C6BC0),
                   ),
                 ),
               ),
               onPressed: () {
+                if (pageIndex != 2) {
+                  Provider.of<RecordController>(context, listen: false).reset();
+                }
                 Provider.of<BottomBarController>(context, listen: false)
                     .changeIndex(2);
-                Provider.of<TodayController>(context, listen: false)
-                    .resetMode();
               },
             ),
           ),

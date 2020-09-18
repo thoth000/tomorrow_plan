@@ -13,8 +13,13 @@ class EventList extends StatelessWidget {
     DateTime selectedDate = controller.selectedDate;
     Map<DateTime, List> events = controller.events;
     if (events[selectedDate] == null || events[selectedDate].length == 0) {
+      if (selectedDate.difference(controller.today).inDays >= 0) {
+        return const Center(
+          child: Text('予定はありません'),
+        );
+      }
       return const Center(
-        child: Text('記録なし'),
+        child: Text('記録はありません'),
       );
     }
     return ListView.builder(
@@ -80,7 +85,7 @@ class EventList extends StatelessWidget {
                   ),
                 );
               } else if (!event['isFinish']) {
-                controller.finishPlan(index);
+                controller.finishPlan(index, 'normal');
                 //for snackBar
                 List<String> messages = [
                   'お疲れ様でした！',
@@ -98,7 +103,7 @@ class EventList extends StatelessWidget {
                   ),
                 );
               } else {
-                controller.unfinishPlan(index);
+                controller.unfinishPlan(index, 'normal');
               }
             },
           ),

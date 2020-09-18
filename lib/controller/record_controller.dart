@@ -3,18 +3,20 @@ import 'package:hive/hive.dart';
 
 class RecordController with ChangeNotifier {
   DateTime selectedDate;
-  Map<DateTime, List> events;
+  DateTime today = DateTime.now();
+  Map<DateTime, List> events = {};
   bool isEditing = false;
 
-  Future getPlan(DateTime today) async {
-    final Map savedData = await Hive.lazyBox('event').get('event');
+  Future getPlan(DateTime _today) async {
+    final Map savedData = await Hive.box('event').get('event');
     events = new Map<DateTime, List>.from(savedData);
-    selectedDate = today;
+    selectedDate = _today;
+    today = _today;
     notifyListeners();
   }
 
   void setPlan() {
-    Hive.lazyBox('event').put('event', events);
+    Hive.box('event').put('event', events);
   }
 
   void eventSort(DateTime date) {
@@ -29,20 +31,32 @@ class RecordController with ChangeNotifier {
   }
 
   void selectDate(DateTime day) {
-    final DateTime date = DateTime(day.year, day.month, day.day);
-    selectedDate = date;
+    final DateTime _date = DateTime(day.year, day.month, day.day);
+    selectedDate = _date;
     notifyListeners();
   }
 
-  void finishPlan(int index) {
-    events[selectedDate][index]['isFinish'] = true;
-    eventSort(selectedDate);
+  void finishPlan(int index, String pattern) {
+    DateTime _date = selectedDate;
+    if (pattern == "today") {
+      _date = today;
+    } else if (pattern == "tomorrow") {
+      _date = today.add(Duration(days: 1));
+    }
+    events[_date][index]['isFinish'] = true;
+    eventSort(_date);
     setPlan();
   }
 
-  void unfinishPlan(int index) {
-    events[selectedDate][index]['isFinish'] = false;
-    eventSort(selectedDate);
+  void unfinishPlan(int index, String pattern) {
+    DateTime _date = selectedDate;
+    if (pattern == "today") {
+      _date = today;
+    } else if (pattern == "tomorrow") {
+      _date = today.add(Duration(days: 1));
+    }
+    events[_date][index]['isFinish'] = false;
+    eventSort(_date);
     setPlan();
   }
 
@@ -53,12 +67,34 @@ class RecordController with ChangeNotifier {
 
   void reset() {
     isEditing = false;
-    selectedDate=Hive.box('setting').get('today');
+    selectedDate = today;
     notifyListeners();
   }
 
-  Map removePlan(int index) {
-    final map = events[selectedDate].removeAt(index);
+  void addPlan(Map event, String pattern) {
+    DateTime _date = selectedDate;
+    if (pattern == "today") {
+      _date = today;
+    } else if (pattern == "tomorrow") {
+      _date = today.add(Duration(days: 1));
+    }
+    if (events[_date] == null) {
+      events[_date] = [];
+    }
+    events[_date].add(event);
+    eventSort(_date);
+    notifyListeners();
+    setPlan();
+  }
+
+  Map removePlan(int index, String pattern) {
+    DateTime date = selectedDate;
+    if (pattern == "today") {
+      date = today;
+    } else if (pattern == "tomorrow") {
+      date = today.add(Duration(days: 1));
+    }
+    final map = events[date].removeAt(index);
     notifyListeners();
     setPlan();
     return map;

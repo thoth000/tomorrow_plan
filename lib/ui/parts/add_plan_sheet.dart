@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tomorrow_plan/controller/bottom_bar_controller.dart';
-import 'package:tomorrow_plan/controller/today_controller.dart';
-import 'package:tomorrow_plan/controller/tomorrow_controller.dart';
+import 'package:tomorrow_plan/controller/record_controller.dart';
 
 class AddPlanSheet extends StatefulWidget {
   @override
@@ -88,11 +87,14 @@ class _AddPlanSheetState extends State<AddPlanSheet> {
                   'isFinish': false,
                 };
                 if (pageIndex == 0) {
-                  Provider.of<TodayController>(context, listen: false)
-                      .addPlan(event);
+                  Provider.of<RecordController>(context, listen: false)
+                      .addPlan(event, 'today');
+                } else if (pageIndex == 1) {
+                  Provider.of<RecordController>(context, listen: false)
+                      .addPlan(event, 'tomorrow');
                 } else {
-                  Provider.of<TomorrowController>(context, listen: false)
-                      .addPlan(event);
+                  Provider.of<RecordController>(context, listen: false)
+                      .addPlan(event, 'normal');
                 }
                 Navigator.pop(context);
               },

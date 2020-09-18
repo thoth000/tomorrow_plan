@@ -2,18 +2,18 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tomorrow_plan/controller/today_controller.dart';
+import 'package:tomorrow_plan/controller/record_controller.dart';
 import 'package:tomorrow_plan/ui/parts/action_sheet.dart';
 
 class TodayBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final controller = Provider.of<TodayController>(context);
-    final todayPlan = controller.todayPlan;
+    final controller = Provider.of<RecordController>(context);
+    final todayPlan = controller.events[controller.today];
     if (todayPlan == null) {
-      return const Center(
-        child: CircularProgressIndicator(),
-      );
+      return Container();
+    } else {
+      print(todayPlan);
     }
     return ListView.builder(
       itemCount: todayPlan.length,
@@ -78,7 +78,7 @@ class TodayBody extends StatelessWidget {
                   ),
                 );
               } else if (!event['isFinish']) {
-                controller.finishPlan(index);
+                controller.finishPlan(index, 'today');
                 //for snackBar
                 List<String> messages = [
                   'お疲れ様でした！',
@@ -96,7 +96,7 @@ class TodayBody extends StatelessWidget {
                   ),
                 );
               } else {
-                controller.unfinishPlan(index);
+                controller.unfinishPlan(index, 'today');
               }
             },
           ),

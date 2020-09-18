@@ -11,7 +11,7 @@ class RecordAppBar extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: Colors.transparent,
       centerTitle: true,
       title: Text(
-        "これまでの記録",
+        "予定カレンダー",
         style: TextStyle(
           color: const Color(0xFF5C6BC0),
           fontWeight: FontWeight.w700,
@@ -19,7 +19,9 @@ class RecordAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       actions: [
         IconButton(
-          icon: Icon((controller.isEditing) ? Icons.clear : Icons.edit),
+          icon: Icon(
+            (controller.isEditing) ? Icons.clear : Icons.edit,
+          ),
           color: Colors.red,
           onPressed: () => controller.switchMode(),
         ),

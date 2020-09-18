@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:tomorrow_plan/controller/record_controller.dart';
 
 class TomorrowAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
+    final controller = Provider.of<RecordController>(context);
     return AppBar(
       elevation: 0,
       backgroundColor: Colors.transparent,
@@ -14,6 +17,15 @@ class TomorrowAppBar extends StatelessWidget implements PreferredSizeWidget {
           fontWeight: FontWeight.w700,
         ),
       ),
+      actions: [
+        IconButton(
+          icon: Icon(
+            (controller.isEditing) ? Icons.clear : Icons.edit,
+          ),
+          color: Colors.red,
+          onPressed: () => controller.switchMode(),
+        ),
+      ],
     );
   }
 
