@@ -8,4 +8,4 @@ This project is a starting point for a Flutter application.
 
 Entry into a contest called `App Koshien`
 
-APK file(`apk-release.apk`) is in `build\app\outputs\flutter-apk` Directory
+APK file(`apk-release.aab`) is in `build\app\outputs\bundle\release` Directory
