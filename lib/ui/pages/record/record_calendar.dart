@@ -43,9 +43,7 @@ class _RecordCalendarState extends State<RecordCalendar> {
               markersBuilder: (context, date, _, holidays) {
                 bool isMark = false;
                 if (events[date].length == 0) {
-                  return [
-                    const SizedBox()
-                  ];
+                  return [const SizedBox()];
                 }
                 for (Map event in events[date]) {
                   if (!event['isFinish']) {
