@@ -44,7 +44,7 @@ class ActionSheet extends StatelessWidget {
                   bottom: 8,
                   left: 16,
                 ),
-                onTap: () {
+                onTap: () async {
                   Map event;
                   if (pageIndex == 1) {
                     event =
@@ -61,7 +61,7 @@ class ActionSheet extends StatelessWidget {
                   Navigator.pop(context);
                 },
               )
-            : Container(),
+            : const SizedBox(),
         (pageIndex != 1)
             ? ListTile(
                 leading: Icon(
@@ -97,7 +97,7 @@ class ActionSheet extends StatelessWidget {
                   Navigator.pop(context);
                 },
               )
-            : Container(),
+            : const SizedBox(),
         ListTile(
           leading: Icon(
             Icons.cancel,

@@ -44,7 +44,7 @@ class _RecordCalendarState extends State<RecordCalendar> {
                 bool isMark = false;
                 if (events[date].length == 0) {
                   return [
-                    Container(),
+                    const SizedBox()
                   ];
                 }
                 for (Map event in events[date]) {

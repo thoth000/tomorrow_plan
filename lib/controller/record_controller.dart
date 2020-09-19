@@ -7,6 +7,35 @@ class RecordController with ChangeNotifier {
   DateTime today = DateTime.now();
   Map<DateTime, List> events = {};
   bool isEditing = false;
+  //animation用
+  Color borderColor = Colors.grey;
+  Color circleColor = const Color(0xFF5C6BC0);
+  Color iconColor = const Color(0xFF5C6BC0);
+  Color textColor = Colors.black;
+
+  Future hideWidget() async{
+    borderColor = Colors.white;
+    circleColor = Colors.white;
+    for(int i=0;i<10;i+=2){
+      textColor = Colors.black.withOpacity(1-i/10);
+      iconColor = const Color(0xFF5C6BC0).withOpacity(1-i/10);
+      notifyListeners();
+      await Future.delayed(Duration(milliseconds: 40));
+    }
+    notifyListeners();
+  }
+
+  Future appearWidget() async{
+    borderColor = Colors.grey;
+    circleColor = const Color(0xFF5C6BC0);
+    notifyListeners();
+    for(int i=10;i>=0;i-=2){
+      textColor = Colors.black.withOpacity(1-i/10);
+      iconColor = const Color(0xFF5C6BC0).withOpacity(1-i/10);
+      notifyListeners();
+      await Future.delayed(Duration(milliseconds: 40));
+    }
+  }
 
   Future getPlan(DateTime _today) async {
     final Map savedData = await Hive.box('event').get('event');
@@ -37,7 +66,7 @@ class RecordController with ChangeNotifier {
     notifyListeners();
   }
 
-  void finishPlan(int index, String pattern) {
+  Future finishPlan(int index, String pattern) async{
     DateTime _date = selectedDate;
     if (pattern == "today") {
       _date = today;
@@ -45,12 +74,14 @@ class RecordController with ChangeNotifier {
       _date = today.add(Duration(days: 1));
     }
     events[_date][index]['isFinish'] = true;
-    eventSort(_date);
     Vibration.vibrate(duration: 60);
+    await hideWidget();
+    eventSort(_date);
+    appearWidget();
     setPlan();
   }
 
-  void unfinishPlan(int index, String pattern) {
+  Future unfinishPlan(int index, String pattern) async{
     DateTime _date = selectedDate;
     if (pattern == "today") {
       _date = today;
@@ -58,8 +89,9 @@ class RecordController with ChangeNotifier {
       _date = today.add(Duration(days: 1));
     }
     events[_date][index]['isFinish'] = false;
+    await hideWidget();
     eventSort(_date);
-    Vibration.vibrate(duration: 50);
+    appearWidget();
     setPlan();
   }
 
