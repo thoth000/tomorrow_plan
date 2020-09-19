@@ -1,6 +1,7 @@
 # tomorrow_plan
-
 A new Flutter application.
+
+<img src="./images/app_icon.png" width=30%>
 
 ## Getting Started
 
