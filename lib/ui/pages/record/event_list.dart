@@ -77,6 +77,7 @@ class EventList extends StatelessWidget {
                 fontWeight: FontWeight.w700,
               ),
             ),
+            enabled: !controller.isAnimation,
             onTap: () {
               if (controller.isEditing) {
                 showModalBottomSheet(

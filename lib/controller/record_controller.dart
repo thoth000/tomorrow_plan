@@ -8,12 +8,14 @@ class RecordController with ChangeNotifier {
   Map<DateTime, List> events = {};
   bool isEditing = false;
   //animation用
+  bool isAnimation = false;
   Color borderColor = Colors.grey;
   Color circleColor = const Color(0xFF5C6BC0);
   Color iconColor = const Color(0xFF5C6BC0);
   Color textColor = Colors.black;
 
   Future hideWidget() async {
+    isAnimation = true;
     borderColor = Colors.white;
     circleColor = Colors.white;
     for (int i = 0; i <= 10; i += 2) {
@@ -28,13 +30,14 @@ class RecordController with ChangeNotifier {
   Future appearWidget() async {
     borderColor = Colors.grey;
     circleColor = const Color(0xFF5C6BC0);
-    notifyListeners();
     for (int i = 10; i >= 0; i -= 2) {
       textColor = Colors.black.withOpacity(1 - i / 10);
       iconColor = const Color(0xFF5C6BC0).withOpacity(1 - i / 10);
       notifyListeners();
       await Future.delayed(Duration(milliseconds: 40));
     }
+    isAnimation = false;
+    notifyListeners();
   }
 
   Future getPlan(DateTime _today) async {
