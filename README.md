@@ -3,13 +3,15 @@
 （一学生が作成したアプリのため、参考程度に見ていただきたい。）
 
 ## 明日の予定
-<img src="https://github.com/thoth000/tomorrow_plan/blob/master/images/app_icon.png" width=30%>
+![aaa](https://user-images.githubusercontent.com/51738889/94272274-d2273080-ff7d-11ea-8423-4236401ef5eb.gif)
 
 **Flutter**を用いて開発したToDoアプリ
 
 **アプリ甲子園2020**にエントリー中
 
 GooglePlayにて[公開中](https://play.google.com/store/apps/details?id=com.thoth000.tomorrow_plan&hl=ja)
+
+<img src="https://github.com/thoth000/tomorrow_plan/blob/master/images/app_icon.png" width=30%>
 
 ## 使用パッケージ
 | パッケージ名 | バージョン |
