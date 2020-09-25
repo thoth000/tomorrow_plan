@@ -3,7 +3,7 @@
 （一学生が作成したアプリのため、参考程度に見ていただきたい。）
 
 ## 明日の予定
-![aaa](https://user-images.githubusercontent.com/51738889/94272274-d2273080-ff7d-11ea-8423-4236401ef5eb.gif)
+<img src="https://user-images.githubusercontent.com/51738889/94273112-ef103380-ff7e-11ea-9885-12a425189140.gif" width=25%>
 
 **Flutter**を用いて開発したToDoアプリ
 
