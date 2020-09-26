@@ -5,7 +5,7 @@ import 'package:tomorrow_plan/controller/record_controller.dart';
 class TomorrowAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
-    final controller = Provider.of<RecordController>(context);
+    final RecordController controller = Provider.of<RecordController>(context);
     return AppBar(
       elevation: 0,
       backgroundColor: Colors.transparent,

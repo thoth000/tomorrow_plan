@@ -8,8 +8,8 @@ import 'package:tomorrow_plan/ui/parts/action_sheet.dart';
 class TomorrowBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final controller = Provider.of<RecordController>(context);
-    final tomorrowPlan =
+    final RecordController controller = Provider.of<RecordController>(context);
+    final List tomorrowPlan =
         controller.events[controller.today.add(Duration(days: 1))];
     if (tomorrowPlan == null) {
       return Container();
@@ -79,15 +79,15 @@ class TomorrowBody extends StatelessWidget {
               } else if (!event['isFinish']) {
                 controller.finishPlan(index, 'tomorrow');
                 //for snackBar
-                List<String> messages = [
+                final List<String> messages = [
                   'お疲れ様でした！',
                   '頑張りました！',
                   'この調子です！',
                   'えらい！',
                   'さすがです！'
                 ];
-                Random random = new Random();
-                int randomNumber = random.nextInt(5);
+                final Random random = new Random();
+                final int randomNumber = random.nextInt(5);
                 Scaffold.of(context).showSnackBar(
                   SnackBar(
                     content: Text(messages[randomNumber]),

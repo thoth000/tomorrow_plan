@@ -8,8 +8,8 @@ import 'package:tomorrow_plan/ui/parts/action_sheet.dart';
 class TodayBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final controller = Provider.of<RecordController>(context);
-    final todayPlan = controller.events[controller.today];
+    final RecordController controller = Provider.of<RecordController>(context);
+    final List todayPlan = controller.events[controller.today];
     if (todayPlan == null) {
       return Container();
     }

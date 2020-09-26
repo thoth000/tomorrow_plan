@@ -9,7 +9,7 @@ class ActionSheet extends StatelessWidget {
   final int planIndex;
   @override
   Widget build(BuildContext context) {
-    int pageIndex = Provider.of<BottomBarController>(context).index;
+    final int pageIndex = Provider.of<BottomBarController>(context).index;
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.center,

@@ -6,7 +6,7 @@ import 'package:tomorrow_plan/controller/record_controller.dart';
 class MyBottomNivigationBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    int pageIndex = Provider.of<BottomBarController>(context).index;
+    final int pageIndex = Provider.of<BottomBarController>(context).index;
     return BottomAppBar(
       child: Row(
         children: [

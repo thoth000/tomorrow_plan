@@ -9,9 +9,9 @@ import 'package:tomorrow_plan/ui/parts/action_sheet.dart';
 class EventList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final controller = Provider.of<RecordController>(context);
-    DateTime selectedDate = controller.selectedDate;
-    Map<DateTime, List> events = controller.events;
+    final RecordController controller = Provider.of<RecordController>(context);
+    final DateTime selectedDate = controller.selectedDate;
+    final Map<DateTime, List> events = controller.events;
     if (events[selectedDate] == null || events[selectedDate].length == 0) {
       if (selectedDate.difference(controller.today).inDays >= 0) {
         return const Center(
@@ -59,7 +59,7 @@ class EventList extends StatelessWidget {
                             size: 30,
                             color: Color(0xFF5C6BC0),
                           )
-                        : SizedBox(),
+                        : const SizedBox(),
               ),
             ),
             title: Text(
@@ -87,15 +87,15 @@ class EventList extends StatelessWidget {
               } else if (!event['isFinish']) {
                 controller.finishPlan(index, 'normal');
                 //for snackBar
-                List<String> messages = [
+                final List<String> messages = [
                   'お疲れ様でした！',
                   '頑張りました！',
                   'この調子です！',
                   'えらい！',
                   'さすがです！'
                 ];
-                Random random = new Random();
-                int randomNumber = random.nextInt(5);
+                final Random random = new Random();
+                final int randomNumber = random.nextInt(5);
                 Scaffold.of(context).showSnackBar(
                   SnackBar(
                     content: Text(messages[randomNumber]),

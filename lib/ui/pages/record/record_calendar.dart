@@ -26,8 +26,8 @@ class _RecordCalendarState extends State<RecordCalendar> {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Provider.of<RecordController>(context);
-    Map<DateTime, List> events = controller.events;
+    final RecordController controller = Provider.of<RecordController>(context);
+    final Map<DateTime, List> events = controller.events;
     if (events == null) {
       return Center(
         child: CircularProgressIndicator(),
