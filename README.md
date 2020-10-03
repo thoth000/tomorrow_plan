@@ -8,6 +8,7 @@
 **Flutter**を用いて開発したToDoアプリ
 
 **アプリ甲子園2020**にエントリー中
+一次予選突破（全国TOP30）
 
 GooglePlayにて[公開中](https://play.google.com/store/apps/details?id=com.thoth000.tomorrow_plan&hl=ja)
 
