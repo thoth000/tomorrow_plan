@@ -19,6 +19,7 @@ class _AddPlanSheetState extends State<AddPlanSheet> {
   @override
   Widget build(BuildContext context) {
     final int pageIndex = Provider.of<BottomBarController>(context).index;
+    final controller = Provider.of<RecordController>(context);
     return Padding(
       padding:
           EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
@@ -87,12 +88,15 @@ class _AddPlanSheetState extends State<AddPlanSheet> {
                   'isFinish': false,
                 };
                 if (pageIndex == 0) {
+                  event['planDate'] = controller.today;
                   Provider.of<RecordController>(context, listen: false)
                       .addPlan(event, 'today');
                 } else if (pageIndex == 1) {
+                  event['planDate'] = controller.today.add(Duration(days: 1));
                   Provider.of<RecordController>(context, listen: false)
                       .addPlan(event, 'tomorrow');
                 } else {
+                  event['planDate'] = controller.selectedDate;
                   Provider.of<RecordController>(context, listen: false)
                       .addPlan(event, 'normal');
                 }

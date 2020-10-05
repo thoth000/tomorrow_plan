@@ -9,9 +9,9 @@ import 'package:tomorrow_plan/ui/parts/action_sheet.dart';
 class EventList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final RecordController controller = Provider.of<RecordController>(context);
-    final DateTime selectedDate = controller.selectedDate;
-    final Map<DateTime, List> events = controller.events;
+    final controller = Provider.of<RecordController>(context);
+    DateTime selectedDate = controller.selectedDate;
+    Map<DateTime, List> events = controller.events;
     if (events[selectedDate] == null || events[selectedDate].length == 0) {
       if (selectedDate.difference(controller.today).inDays >= 0) {
         return const Center(
@@ -26,40 +26,45 @@ class EventList extends StatelessWidget {
       itemCount: events[selectedDate].length,
       itemBuilder: (context, index) {
         final event = events[selectedDate][index];
-        return Container(
+        return AnimatedContainer(
+          duration: Duration(milliseconds: 100),
           decoration: BoxDecoration(
-            border: Border.all(width: 2, color: Colors.grey),
+            border: Border.all(
+              width: 2,
+              color: controller.borderColor,
+            ),
             borderRadius: BorderRadius.circular(12.0),
           ),
           margin: const EdgeInsets.symmetric(
-            horizontal: 8.0,
-            vertical: 4.0,
+            horizontal: 8,
+            vertical: 5,
           ),
           child: ListTile(
-            leading: Container(
+            leading: AnimatedContainer(
+              duration: Duration(milliseconds: 100),
               height: 40,
               width: 40,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(500),
                 border: Border.all(
                   width: 3,
-                  color: const Color(0xFF5C6BC0),
+                  color: controller.circleColor,
                 ),
               ),
               child: Center(
                 child: controller.isEditing
-                    ? const Icon(
+                    ? Icon(
                         Icons.remove,
-                        color: Color(0xFF5C6BC0),
+                        color: controller.iconColor,
                         size: 35,
                       )
                     : event['isFinish']
-                        ? const Icon(
+                        ? Icon(
                             Icons.check,
                             size: 30,
-                            color: Color(0xFF5C6BC0),
+                            color: controller.iconColor,
                           )
-                        : const SizedBox(),
+                        : SizedBox(),
               ),
             ),
             title: Text(
@@ -68,9 +73,11 @@ class EventList extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
                 fontSize: 20,
+                color: controller.textColor,
                 fontWeight: FontWeight.w700,
               ),
             ),
+            enabled: !controller.isAnimation,
             onTap: () {
               if (controller.isEditing) {
                 showModalBottomSheet(
@@ -87,15 +94,15 @@ class EventList extends StatelessWidget {
               } else if (!event['isFinish']) {
                 controller.finishPlan(index, 'normal');
                 //for snackBar
-                final List<String> messages = [
+                List<String> messages = [
                   'お疲れ様でした！',
                   '頑張りました！',
                   'この調子です！',
                   'えらい！',
                   'さすがです！'
                 ];
-                final Random random = new Random();
-                final int randomNumber = random.nextInt(5);
+                Random random = new Random();
+                int randomNumber = random.nextInt(5);
                 Scaffold.of(context).showSnackBar(
                   SnackBar(
                     content: Text(messages[randomNumber]),

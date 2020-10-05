@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tomorrow_plan/controller/record_controller.dart';
+import 'package:tomorrow_plan/ui/pages/record/reset_dialog.dart';
 
 class RecordAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
@@ -16,6 +17,13 @@ class RecordAppBar extends StatelessWidget implements PreferredSizeWidget {
           color: const Color(0xFF5C6BC0),
           fontWeight: FontWeight.w700,
         ),
+      ),
+      leading: IconButton(
+        icon: Icon(Icons.delete),
+        color: Colors.red,
+        onPressed: () {
+          showDialog(context: context,builder: (context) => ResetDialog(),);
+        },
       ),
       actions: [
         IconButton(
