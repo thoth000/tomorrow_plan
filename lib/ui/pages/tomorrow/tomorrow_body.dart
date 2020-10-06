@@ -114,23 +114,24 @@ class TomorrowBody extends StatelessWidget {
                     duration: Duration(seconds: 1),
                   ),
                 );
+                //ここまで
               } else {
                 controller.unfinishPlan(index, 'tomorrow');
               }
             },
             onLongPress: () {
               String title;
-              if(isDateNotOver){
-                title='予定通りです';
-              }else{
-                title='後回しにしています';
+              if (isDateNotOver) {
+                title = '予定通りです';
+              } else {
+                title = '後回しにしています';
               }
               showDialog(
                 context: context,
                 builder: (context) => DateDialog(
                   title: title,
                   planDate: planDate,
-                  selectedDate: controller.today.add(Duration(days:1)),
+                  selectedDate: controller.today.add(Duration(days: 1)),
                 ),
               );
             },

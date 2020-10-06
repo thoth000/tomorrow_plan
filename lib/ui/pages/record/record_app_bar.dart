@@ -22,7 +22,10 @@ class RecordAppBar extends StatelessWidget implements PreferredSizeWidget {
         icon: Icon(Icons.delete),
         color: Colors.red,
         onPressed: () {
-          showDialog(context: context,builder: (context) => ResetDialog(),);
+          showDialog(
+            context: context,
+            builder: (context) => ResetDialog(),
+          );
         },
       ),
       actions: [

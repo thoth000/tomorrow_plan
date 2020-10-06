@@ -16,7 +16,7 @@ class RecordController with ChangeNotifier {
   Color iconColor = const Color(0xFF5C6BC0);
   Color redIconColor = Colors.red;
   Color textColor = Colors.black;
-
+  //ここまで
   Future hideWidget() async {
     isAnimation = true;
     borderColor = Colors.white;
@@ -57,7 +57,7 @@ class RecordController with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> setPlan() async{
+  Future<void> setPlan() async {
     await Hive.box('event').put('event', events);
   }
 
@@ -147,7 +147,7 @@ class RecordController with ChangeNotifier {
     return map;
   }
 
-  Future<void> resetData() async{
+  Future<void> resetData() async {
     events = {};
     notifyListeners();
     await setPlan();

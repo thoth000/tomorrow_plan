@@ -15,7 +15,7 @@ class _ResetDialogState extends State<ResetDialog> {
       tapTime += 1;
     });
     if (tapTime == 3) {
-      await Provider.of<RecordController>(context,listen: false).resetData();
+      await Provider.of<RecordController>(context, listen: false).resetData();
       Navigator.pop(context);
     }
   }
