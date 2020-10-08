@@ -32,10 +32,13 @@ class DateDialog extends StatelessWidget {
       content: Text('$text'),
       actions: [
         FlatButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            child: Text('OK')),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: Text(
+            'OK',
+          ),
+        ),
       ],
     );
   }

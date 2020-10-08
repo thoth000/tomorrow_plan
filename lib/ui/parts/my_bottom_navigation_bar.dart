@@ -7,6 +7,10 @@ class MyBottomNivigationBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final int pageIndex = Provider.of<BottomBarController>(context).index;
+    final BottomBarController bottomBarController =
+        Provider.of<BottomBarController>(context, listen: false);
+    final RecordController recordController =
+        Provider.of<RecordController>(context, listen: false);
     return BottomAppBar(
       child: Row(
         children: [
@@ -42,10 +46,9 @@ class MyBottomNivigationBar extends StatelessWidget {
               ),
               onPressed: () {
                 if (pageIndex != 0) {
-                  Provider.of<RecordController>(context, listen: false).reset();
+                  recordController.reset();
                 }
-                Provider.of<BottomBarController>(context, listen: false)
-                    .changeIndex(0);
+                bottomBarController.changeIndex(0);
               },
             ),
           ),
@@ -81,10 +84,9 @@ class MyBottomNivigationBar extends StatelessWidget {
               ),
               onPressed: () {
                 if (pageIndex != 1) {
-                  Provider.of<RecordController>(context, listen: false).reset();
+                  recordController.reset();
                 }
-                Provider.of<BottomBarController>(context, listen: false)
-                    .changeIndex(1);
+                bottomBarController.changeIndex(1);
               },
             ),
           ),
@@ -120,10 +122,9 @@ class MyBottomNivigationBar extends StatelessWidget {
               ),
               onPressed: () {
                 if (pageIndex != 2) {
-                  Provider.of<RecordController>(context, listen: false).reset();
+                  recordController.reset();
                 }
-                Provider.of<BottomBarController>(context, listen: false)
-                    .changeIndex(2);
+                bottomBarController.changeIndex(2);
               },
             ),
           ),

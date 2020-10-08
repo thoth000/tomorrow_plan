@@ -2,18 +2,23 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tomorrow_plan/controller/color_controller.dart';
 
 import 'package:tomorrow_plan/controller/record_controller.dart';
 import 'package:tomorrow_plan/ui/parts/action_sheet.dart';
+import 'package:tomorrow_plan/ui/parts/rename_sheet.dart';
 
 class EventList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final controller = Provider.of<RecordController>(context);
-    DateTime selectedDate = controller.selectedDate;
-    Map<DateTime, List> events = controller.events;
+    final RecordController recordController =
+        Provider.of<RecordController>(context);
+    final ColorController colorController =
+        Provider.of<ColorController>(context);
+    DateTime selectedDate = recordController.selectedDate;
+    Map<DateTime, List> events = recordController.events;
     if (events[selectedDate] == null || events[selectedDate].length == 0) {
-      if (selectedDate.difference(controller.today).inDays >= 0) {
+      if (selectedDate.difference(recordController.today).inDays >= 0) {
         return const Center(
           child: Text('予定はありません'),
         );
@@ -31,7 +36,7 @@ class EventList extends StatelessWidget {
           decoration: BoxDecoration(
             border: Border.all(
               width: 2,
-              color: controller.borderColor,
+              color: colorController.borderColor,
             ),
             borderRadius: BorderRadius.circular(12.0),
           ),
@@ -48,23 +53,23 @@ class EventList extends StatelessWidget {
                 borderRadius: BorderRadius.circular(500),
                 border: Border.all(
                   width: 3,
-                  color: controller.circleColor,
+                  color: colorController.circleColor,
                 ),
               ),
               child: Center(
-                child: controller.isEditing
+                child: recordController.isEditing
                     ? Icon(
                         Icons.remove,
-                        color: controller.iconColor,
+                        color: colorController.iconColor,
                         size: 35,
                       )
                     : event['isFinish']
                         ? Icon(
                             Icons.check,
                             size: 30,
-                            color: controller.iconColor,
+                            color: colorController.iconColor,
                           )
-                        : SizedBox(),
+                        : const SizedBox(),
               ),
             ),
             title: Text(
@@ -73,13 +78,13 @@ class EventList extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
                 fontSize: 20,
-                color: controller.textColor,
+                color: colorController.textColor,
                 fontWeight: FontWeight.w700,
               ),
             ),
-            enabled: !controller.isAnimation,
-            onTap: () {
-              if (controller.isEditing) {
+            enabled: !colorController.isAnimation,
+            onTap: () async {
+              if (recordController.isEditing) {
                 showModalBottomSheet(
                   context: context,
                   shape: RoundedRectangleBorder(
@@ -92,7 +97,6 @@ class EventList extends StatelessWidget {
                   ),
                 );
               } else if (!event['isFinish']) {
-                controller.finishPlan(index, 'normal');
                 //for snackBar
                 List<String> messages = [
                   'お疲れ様でした！',
@@ -109,9 +113,30 @@ class EventList extends StatelessWidget {
                     duration: Duration(seconds: 1),
                   ),
                 );
+                //controller method
+                await colorController.hideWidget();
+                await recordController.finishPlan(index, 'normal');
+                await colorController.appearWidget();
               } else {
-                controller.unfinishPlan(index, 'normal');
+                await colorController.hideWidget();
+                await recordController.unfinishPlan(index, 'normal');
+                await colorController.appearWidget();
               }
+            },
+            onLongPress: () {
+              showModalBottomSheet(
+                context: context,
+                isScrollControlled: true,
+                builder: (context) => RenameSheet(
+                  index: index,
+                  beforeTitle: event['title'],
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.vertical(
+                    top: Radius.circular(30),
+                  ),
+                ),
+              );
             },
           ),
         );

@@ -6,7 +6,9 @@ class MyFloatingActionButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return FloatingActionButton(
       backgroundColor: const Color(0xFF5C6BC0),
-      child: Icon(Icons.add),
+      child: Icon(
+        Icons.add,
+      ),
       onPressed: () {
         showModalBottomSheet(
           context: context,

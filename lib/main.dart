@@ -4,6 +4,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:package_info/package_info.dart';
 import 'package:provider/provider.dart';
 import 'package:tomorrow_plan/controller/bottom_bar_controller.dart';
+import 'package:tomorrow_plan/controller/color_controller.dart';
 import 'package:tomorrow_plan/controller/record_controller.dart';
 import 'package:tomorrow_plan/ui/home.dart';
 
@@ -16,6 +17,9 @@ void main() {
         ),
         ChangeNotifierProvider<RecordController>(
           create: (_) => RecordController(),
+        ),
+        ChangeNotifierProvider<ColorController>(
+          create: (_) => ColorController(),
         ),
       ],
       child: MyApp(),
