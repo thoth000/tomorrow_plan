@@ -3,16 +3,24 @@ import 'package:provider/provider.dart';
 import 'package:tomorrow_plan/controller/bottom_bar_controller.dart';
 import 'package:tomorrow_plan/controller/record_controller.dart';
 
-class AddPlanSheet extends StatefulWidget {
+class RenameSheet extends StatefulWidget {
+  RenameSheet({
+    @required this.beforeTitle,
+    @required this.index,
+  });
+  final String beforeTitle;
+  final int index;
   @override
-  _AddPlanSheetState createState() => _AddPlanSheetState();
+  _RenameSheetState createState() => _RenameSheetState();
 }
 
-class _AddPlanSheetState extends State<AddPlanSheet> {
+class _RenameSheetState extends State<RenameSheet> {
   TextEditingController textEditingController;
   @override
   void initState() {
-    textEditingController = TextEditingController();
+    textEditingController = TextEditingController(
+      text: widget.beforeTitle,
+    );
     super.initState();
   }
 
@@ -26,7 +34,7 @@ class _AddPlanSheetState extends State<AddPlanSheet> {
   Widget build(BuildContext context) {
     final int pageIndex = Provider.of<BottomBarController>(context).index;
     final RecordController recordController =
-        Provider.of<RecordController>(context);
+        Provider.of<RecordController>(context, listen: false);
     return Padding(
       padding: EdgeInsets.only(
         bottom: MediaQuery.of(context).viewInsets.bottom,
@@ -81,7 +89,7 @@ class _AddPlanSheetState extends State<AddPlanSheet> {
               color: const Color(0xFF5C6BC0),
               child: Center(
                 child: Text(
-                  '追加する',
+                  '変更する',
                   style: TextStyle(
                     fontSize: 15,
                     color: Colors.white,
@@ -90,21 +98,14 @@ class _AddPlanSheetState extends State<AddPlanSheet> {
                 ),
               ),
               onPressed: () {
-                final String title = textEditingController.text;
-                Map event = {
-                  'title': title,
-                  'isFinish': false,
-                };
+                final int index = widget.index;
+                final String newTitle = textEditingController.text;
                 if (pageIndex == 0) {
-                  event['planDate'] = recordController.today;
-                  recordController.addPlan(event, 'today');
+                  recordController.rename(index, newTitle, 'today');
                 } else if (pageIndex == 1) {
-                  event['planDate'] =
-                      recordController.today.add(Duration(days: 1));
-                  recordController.addPlan(event, 'tomorrow');
+                  recordController.rename(index, newTitle, 'tomorrow');
                 } else {
-                  event['planDate'] = recordController.selectedDate;
-                  recordController.addPlan(event, 'normal');
+                  recordController.rename(index, newTitle, 'normal');
                 }
                 Navigator.pop(context);
               },

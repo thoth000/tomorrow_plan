@@ -35,8 +35,8 @@ class _ResetDialogState extends State<ResetDialog> {
         ),
         FlatButton(
           onPressed: () async {
-            await tap();
             Vibration.vibrate(duration: 50);
+            await tap();
           },
           child: Text(
             message[tapTime],

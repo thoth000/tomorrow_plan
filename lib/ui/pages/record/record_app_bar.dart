@@ -6,7 +6,8 @@ import 'package:tomorrow_plan/ui/pages/record/reset_dialog.dart';
 class RecordAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
-    final RecordController controller = Provider.of<RecordController>(context);
+    final RecordController recordController =
+        Provider.of<RecordController>(context);
     return AppBar(
       elevation: 0,
       backgroundColor: Colors.transparent,
@@ -31,10 +32,10 @@ class RecordAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions: [
         IconButton(
           icon: Icon(
-            (controller.isEditing) ? Icons.clear : Icons.edit,
+            (recordController.isEditing) ? Icons.clear : Icons.edit,
           ),
           color: Colors.red,
-          onPressed: () => controller.switchMode(),
+          onPressed: () => recordController.switchMode(),
         ),
       ],
     );

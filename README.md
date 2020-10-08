@@ -14,6 +14,9 @@ GooglePlayにて[公開中](https://play.google.com/store/apps/details?id=com.th
 
 <img src="https://github.com/thoth000/tomorrow_plan/blob/master/images/app_icon.png" width=30%>
 
+## 開発環境
+`Flutter` 1.23.0-8.0.pre.125
+
 ## 使用パッケージ
 | パッケージ名 | バージョン |
 | ---- | ---- |

@@ -9,7 +9,9 @@ class ActionSheet extends StatelessWidget {
   final int planIndex;
   @override
   Widget build(BuildContext context) {
-    int pageIndex = Provider.of<BottomBarController>(context).index;
+    final int pageIndex = Provider.of<BottomBarController>(context).index;
+    final RecordController recordController =
+        Provider.of<RecordController>(context, listen: false);
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -47,16 +49,11 @@ class ActionSheet extends StatelessWidget {
                 onTap: () async {
                   Map event;
                   if (pageIndex == 1) {
-                    event =
-                        Provider.of<RecordController>(context, listen: false)
-                            .removePlan(planIndex, 'tomorrow');
+                    event = recordController.removePlan(planIndex, 'tomorrow');
                   } else {
-                    event =
-                        Provider.of<RecordController>(context, listen: false)
-                            .removePlan(planIndex, 'normal');
+                    event = recordController.removePlan(planIndex, 'normal');
                   }
-                  Provider.of<RecordController>(context, listen: false)
-                      .addPlan(event, 'today');
+                  recordController.addPlan(event, 'today');
                   Vibration.vibrate(duration: 50);
                   Navigator.pop(context);
                 },
@@ -83,16 +80,11 @@ class ActionSheet extends StatelessWidget {
                 onTap: () {
                   Map event;
                   if (pageIndex == 0) {
-                    event =
-                        Provider.of<RecordController>(context, listen: false)
-                            .removePlan(planIndex, 'today');
+                    event = recordController.removePlan(planIndex, 'today');
                   } else {
-                    event =
-                        Provider.of<RecordController>(context, listen: false)
-                            .removePlan(planIndex, 'normal');
+                    event = recordController.removePlan(planIndex, 'normal');
                   }
-                  Provider.of<RecordController>(context, listen: false)
-                      .addPlan(event, 'tomorrow');
+                  recordController.addPlan(event, 'tomorrow');
                   Vibration.vibrate(duration: 50);
                   Navigator.pop(context);
                 },
@@ -117,14 +109,11 @@ class ActionSheet extends StatelessWidget {
           ),
           onTap: () {
             if (pageIndex == 0) {
-              Provider.of<RecordController>(context, listen: false)
-                  .removePlan(planIndex, 'today');
+              recordController.removePlan(planIndex, 'today');
             } else if (pageIndex == 1) {
-              Provider.of<RecordController>(context, listen: false)
-                  .removePlan(planIndex, 'tomorrow');
+              recordController.removePlan(planIndex, 'tomorrow');
             } else {
-              Provider.of<RecordController>(context, listen: false)
-                  .removePlan(planIndex, 'normal');
+              recordController.removePlan(planIndex, 'normal');
             }
             Vibration.vibrate(duration: 50);
             Navigator.pop(context);

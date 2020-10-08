@@ -2,15 +2,21 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tomorrow_plan/controller/color_controller.dart';
 import 'package:tomorrow_plan/controller/record_controller.dart';
 import 'package:tomorrow_plan/ui/parts/action_sheet.dart';
 import 'package:tomorrow_plan/ui/parts/date_dialog.dart';
+import 'package:tomorrow_plan/ui/parts/rename_sheet.dart';
 
 class TomorrowBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final controller = Provider.of<RecordController>(context);
-    final tomorrowPlan = controller.events[controller.today.add(
+    final RecordController recordController =
+        Provider.of<RecordController>(context);
+    final ColorController colorController =
+        Provider.of<ColorController>(context);
+    final List tomorrowPlan =
+        recordController.events[recordController.today.add(
       Duration(days: 1),
     )];
     if (tomorrowPlan == null || tomorrowPlan.length == 0) {
@@ -23,14 +29,17 @@ class TomorrowBody extends StatelessWidget {
         final DateTime planDate = event['planDate'];
         final bool isDateNotOver = (planDate == null ||
             !planDate
-                .difference(controller.today.add(Duration(days: 1)))
+                .difference(recordController.today.add(Duration(days: 1)))
                 .isNegative);
-        final Color borderColor =
-            isDateNotOver ? controller.borderColor : controller.redBorderColor;
-        final Color iconColor =
-            isDateNotOver ? controller.iconColor : controller.redIconColor;
-        final Color circleColor =
-            isDateNotOver ? controller.circleColor : controller.redCircleColor;
+        final Color borderColor = isDateNotOver
+            ? colorController.borderColor
+            : colorController.redBorderColor;
+        final Color iconColor = isDateNotOver
+            ? colorController.iconColor
+            : colorController.redIconColor;
+        final Color circleColor = isDateNotOver
+            ? colorController.circleColor
+            : colorController.redCircleColor;
         return AnimatedContainer(
           duration: Duration(milliseconds: 100),
           decoration: BoxDecoration(
@@ -57,7 +66,7 @@ class TomorrowBody extends StatelessWidget {
                 ),
               ),
               child: Center(
-                child: controller.isEditing
+                child: recordController.isEditing
                     ? Icon(
                         Icons.remove,
                         color: iconColor,
@@ -69,7 +78,7 @@ class TomorrowBody extends StatelessWidget {
                             size: 30,
                             color: iconColor,
                           )
-                        : SizedBox(),
+                        : const SizedBox(),
               ),
             ),
             title: Text(
@@ -78,13 +87,13 @@ class TomorrowBody extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
                 fontSize: 20,
-                color: controller.textColor,
+                color: colorController.textColor,
                 fontWeight: FontWeight.w700,
               ),
             ),
-            enabled: !controller.isAnimation,
-            onTap: () {
-              if (controller.isEditing) {
+            enabled: !colorController.isAnimation,
+            onTap: () async {
+              if (recordController.isEditing) {
                 showModalBottomSheet(
                   context: context,
                   shape: RoundedRectangleBorder(
@@ -97,7 +106,6 @@ class TomorrowBody extends StatelessWidget {
                   ),
                 );
               } else if (!event['isFinish']) {
-                controller.finishPlan(index, 'tomorrow');
                 //for snackBar
                 List<String> messages = [
                   'お疲れ様でした！',
@@ -114,26 +122,46 @@ class TomorrowBody extends StatelessWidget {
                     duration: Duration(seconds: 1),
                   ),
                 );
-                //ここまで
+                await colorController.hideWidget();
+                await recordController.finishPlan(index, 'tomorrow');
+                await colorController.appearWidget();
               } else {
-                controller.unfinishPlan(index, 'tomorrow');
+                await colorController.hideWidget();
+                await recordController.unfinishPlan(index, 'tomorrow');
+                await colorController.appearWidget();
               }
             },
             onLongPress: () {
-              String title;
-              if (isDateNotOver) {
-                title = '予定通りです';
+              if (recordController.isEditing) {
+                showModalBottomSheet(
+                  context: context,
+                  isScrollControlled: true,
+                  builder: (context) => RenameSheet(
+                    index: index,
+                    beforeTitle: event['title'],
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.vertical(
+                      top: Radius.circular(30),
+                    ),
+                  ),
+                );
               } else {
-                title = '後回しにしています';
+                String title;
+                if (isDateNotOver) {
+                  title = '予定通りです';
+                } else {
+                  title = '後回しにしています';
+                }
+                showDialog(
+                  context: context,
+                  builder: (context) => DateDialog(
+                    title: title,
+                    planDate: planDate,
+                    selectedDate: recordController.today.add(Duration(days: 1)),
+                  ),
+                );
               }
-              showDialog(
-                context: context,
-                builder: (context) => DateDialog(
-                  title: title,
-                  planDate: planDate,
-                  selectedDate: controller.today.add(Duration(days: 1)),
-                ),
-              );
             },
           ),
         );
