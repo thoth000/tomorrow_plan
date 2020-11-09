@@ -73,6 +73,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Tomorrow_plan',
       theme: ThemeData(
         primarySwatch: Colors.indigo,
