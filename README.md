@@ -1,6 +1,4 @@
 # Flutter Application
-このリポジトリでは一学生が作成したFlutter製のアプリ開発コードを自由に閲覧できる。<br>
-（一学生が作成したアプリのため、参考程度に見ていただきたい。）
 
 ## 明日の予定
 <img src="https://user-images.githubusercontent.com/51738889/94273112-ef103380-ff7e-11ea-9885-12a425189140.gif" width=25%>
