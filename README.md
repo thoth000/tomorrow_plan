@@ -8,8 +8,6 @@
 **アプリ甲子園2020**にエントリー中
 一次予選突破（全国TOP30）
 
-GooglePlayにて[公開中](https://play.google.com/store/apps/details?id=com.thoth000.tomorrow_plan&hl=ja)
-
 <img src="https://github.com/thoth000/tomorrow_plan/blob/master/images/app_icon.png" width=30%>
 
 ## 開発環境
