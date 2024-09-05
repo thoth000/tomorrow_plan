@@ -5,8 +5,7 @@
 
 **Flutter**を用いて開発したToDoアプリ
 
-**アプリ甲子園2020**にエントリー中
-一次予選突破（全国TOP30）
+**アプリ甲子園2020**TOP30
 
 <img src="https://github.com/thoth000/tomorrow_plan/blob/master/images/app_icon.png" width=30%>
 
